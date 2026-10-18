@@ -2,7 +2,7 @@
   --ink: #15112e; --ink-2: #4a4766; --ink-3: #8a87a3;
   --bg: #f4f3fa; --card: #ffffff; --line: #e4e2f0;
   --brand: #1b1446; --brand-2: #3b1d8f; --accent: #00a8ff; --hot: #ff1f4b;
-  --sheet-peek: 34vh; --sheet-full: 84vh;
+  --sheet-peek: max(40vh, 220px); --sheet-full: 84vh;
   --top-h: 56px; --scale-h: 24px;
   --bar: #0a2e9c; --bar-2: #0b3fc4; --cyan: #00d4ff; --cyan-ink: #00184d;
   --shadow: 0 10px 30px rgba(27, 20, 70, .18), 0 2px 6px rgba(27, 20, 70, .08);
@@ -98,12 +98,12 @@ body.picking #map { cursor: crosshair; }
 
 /* ---------- bottom sheet ---------- */
 .sheet {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 950; height: var(--sheet-full);
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 950; height: var(--sheet-peek);
   background: var(--bg); border-radius: 22px 22px 0 0; box-shadow: 0 -10px 30px rgba(27, 20, 70, .18);
-  transform: translateY(calc(var(--sheet-full) - var(--sheet-peek))); transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+  transition: height .3s cubic-bezier(.2, .8, .2, 1);
   display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom);
 }
-.sheet[data-state="full"] { transform: translateY(0); }
+.sheet[data-state="full"] { height: var(--sheet-full); }
 .timeline { display: flex; flex-direction: column; gap: 2px; padding: 10px 16px 2px; }
 .tl-time { font-size: 13px; color: var(--ink-2); display: flex; gap: 8px; align-items: baseline; height: 20px; }
 .tl-time b { font-size: 16px; color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -123,7 +123,7 @@ body.picking #map { cursor: crosshair; }
 .handle { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 4px 16px 8px; }
 .handle i { width: 40px; height: 5px; border-radius: 99px; background: var(--line); }
 .handle b { align-self: flex-start; font-size: 13px; text-transform: uppercase; letter-spacing: .8px; color: var(--ink-3); }
-.plist { flex: 1; overflow-y: auto; padding: 0 12px 24px; display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
+.plist { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 12px 24px; display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
 
 .pcard { background: var(--card); border-radius: var(--r); padding: 12px 14px; box-shadow: 0 1px 0 var(--line), 0 4px 14px rgba(27, 20, 70, .06); border-left: 6px solid #c8c4e4; }
 .pcard.lvl0 { border-left-color: #2bd67b; }
@@ -228,6 +228,7 @@ body.is-future #map::after {
 @media (min-width: 760px) {
   :root { --sheet-peek: 100vh; --sheet-full: 100vh; }
   .sheet { left: auto; width: 400px; top: calc(var(--top-h) + 12px); height: auto; bottom: 12px; right: 12px; border-radius: 22px; transform: none !important; }
+  .sheet, .sheet[data-state] { height: auto; }
   .handle i { display: none; }
   .map-tools { right: 424px; bottom: 24px; }
   .player { right: 424px; }
