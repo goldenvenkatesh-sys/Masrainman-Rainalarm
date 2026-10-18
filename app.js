@@ -796,7 +796,7 @@
   applyTheme();
   renderAll();
   mirrorToWorker();
-  if (!S.onboarded) $("#onboard").classList.add("open");
+  if (!S.onboarded && !EMBEDDED) $("#onboard").classList.add("open");   // inside the blog: show the radar straight away; ⏻ turns the alarm on
   setSheet("peek");
   if (places.length) {
     const b = L.latLngBounds(places.map((p) => [p.lat, p.lon]));
